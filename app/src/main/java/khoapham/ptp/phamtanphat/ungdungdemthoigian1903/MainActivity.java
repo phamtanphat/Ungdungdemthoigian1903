@@ -15,10 +15,11 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText edtNgaybatdau,edtNgayketthuc;
+    EditText edtNgaybatdau, edtNgayketthuc;
     Button btnTinhngay;
     TextView txtTongngay;
-    Calendar calendarBatdau,calendarKetthuc;
+    Calendar calendarBatdau, calendarKetthuc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,39 +49,48 @@ public class MainActivity extends AppCompatActivity {
         calendarBatdau = Calendar.getInstance();
         calendarKetthuc = Calendar.getInstance();
 
-        Log.d("BBB",calendarBatdau.get(Calendar.MONTH) + "");
 
-       edtNgaybatdau.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                   @Override
-                   public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                       calendarBatdau.set(year,month,dayOfMonth);
-                       edtNgaybatdau.setText(calendarBatdau.get(Calendar.DATE) + "/" +(calendarBatdau.get(Calendar.MONTH) +1 ) + "/" + calendarBatdau.get(Calendar.YEAR));
+        edtNgaybatdau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendarBatdau.set(year, month, dayOfMonth);
+                        edtNgaybatdau.setText(calendarBatdau.get(Calendar.DATE) + "/" + (calendarBatdau.get(Calendar.MONTH) + 1) + "/" + calendarBatdau.get(Calendar.YEAR));
 
                         calendarKetthuc.setTimeInMillis(calendarBatdau.getTimeInMillis() + (1000 * 60 * 60 * 24));
-                        edtNgayketthuc.setText(calendarKetthuc.get(Calendar.DATE) + "/" +(calendarKetthuc.get(Calendar.MONTH) +1 ) + "/" + calendarKetthuc.get(Calendar.YEAR));
-                   }
-               },calendarBatdau.get(Calendar.YEAR), calendarBatdau.get(Calendar.MONTH),calendarBatdau.get(Calendar.DATE));
-               datePickerDialog.getDatePicker().setMinDate(calendarBatdau.getTimeInMillis());
-               datePickerDialog.show();
-           }
-       });
-       edtNgayketthuc.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                   @Override
-                   public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                       calendarKetthuc.set(year,month,dayOfMonth);
-                       edtNgayketthuc.setText(calendarKetthuc.get(Calendar.DATE) + "/" +(calendarKetthuc.get(Calendar.MONTH) +1 ) + "/" + calendarKetthuc.get(Calendar.YEAR));
-                   }
-               },calendarKetthuc.get(Calendar.YEAR), calendarKetthuc.get(Calendar.MONTH),calendarKetthuc.get(Calendar.DATE));
-               datePickerDialog.getDatePicker().setMinDate(calendarBatdau.getTimeInMillis() + (1000 * 60 * 60 * 24));
-               datePickerDialog.show();
-           }
-       });
+                        edtNgayketthuc.setText(calendarKetthuc.get(Calendar.DATE) + "/" + (calendarKetthuc.get(Calendar.MONTH) + 1) + "/" + calendarKetthuc.get(Calendar.YEAR));
+                    }
+                }, calendarBatdau.get(Calendar.YEAR), calendarBatdau.get(Calendar.MONTH), calendarBatdau.get(Calendar.DATE));
+                datePickerDialog.getDatePicker().setMinDate(calendarBatdau.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
+        edtNgayketthuc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendarKetthuc.set(year, month, dayOfMonth);
+                        edtNgayketthuc.setText(calendarKetthuc.get(Calendar.DATE) + "/" + (calendarKetthuc.get(Calendar.MONTH) + 1) + "/" + calendarKetthuc.get(Calendar.YEAR));
+                    }
+                }, calendarKetthuc.get(Calendar.YEAR), calendarKetthuc.get(Calendar.MONTH), calendarKetthuc.get(Calendar.DATE));
+                datePickerDialog.getDatePicker().setMinDate(calendarBatdau.getTimeInMillis() + (1000 * 60 * 60 * 24));
+                datePickerDialog.show();
+            }
+        });
 
+        btnTinhngay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (calendarKetthuc.getTimeInMillis() - calendarBatdau.getTimeInMillis() > 0){
+                    long valueTime = calendarKetthuc.getTimeInMillis() - calendarBatdau.getTimeInMillis();
+                    int ngay = (int) (valueTime / (1000 * 60 * 60 * 24));
+                    txtTongngay.setText(ngay + "");
+                }
+            }
+        });
     }
 }
