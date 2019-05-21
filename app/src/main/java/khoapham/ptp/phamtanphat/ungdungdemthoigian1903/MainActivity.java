@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //moc tgian se tinh : 1 - 1 - 1970 => hien tai
 //        long millisecond = System.currentTimeMillis();
         long millisecond = calendar.getTimeInMillis();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Log.d("BBB",simpleDateFormat.format(millisecond));
 
 
